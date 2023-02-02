@@ -22,6 +22,9 @@ public class Mane {
         System.out.println(arrayList);
     }
 
+
+
+
     private static void getMinMaxAverageValues() {
         ArrayList<Integer> arrayList = new ArrayList<>();
         Random random = new Random();
@@ -47,6 +50,9 @@ public class Mane {
         System.out.println("minimum = " + minValue + ", " + "maximum = " + maxValue + ", "
                 + "average = " + averageValue);
     }
+
+
+
 
     private static void removeDuplicates() {
         ArrayList <String> planets = new ArrayList<>();
