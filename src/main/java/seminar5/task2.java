@@ -1,12 +1,13 @@
 package seminar5;
 
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class task2 {
     public static void main(String[] args) {
-        countFirstNameDuplicates();
+        System.out.println(sortNamesByPopularity(countFirstNameDuplicates(createListOfEmployees())));
     }
-    private static void countFirstNameDuplicates() {
+    private static HashMap createListOfEmployees() {
 
         HashMap<String, String> employees = new HashMap<>();
         employees.put("Иванов", "Иван");
@@ -27,16 +28,25 @@ public class task2 {
         employees.put("Мечников", "Иван");
         employees.put("Петин", "Петр");
         employees.put("Ежов", "Иван");
-
-        HashMap firstNames = new HashMap();
-        for (String key: employees.keySet()) {
+        return employees;
+    }
+    private static HashMap countFirstNameDuplicates(Map<String, Integer> employees) {
+        HashMap<String, Integer> firstNames = new HashMap();
+        for (String key : employees.keySet()) {
             System.out.printf("%s %s\n", employees.get(key), key);
             if (firstNames.containsKey(employees.get(key))) {
-                firstNames.put(employees.get(key), Integer.parseInt(firstNames.get(employees.get(key)).toString()) + 1);
+                firstNames.put(String.valueOf(employees.get(key)), Integer.parseInt(firstNames.get(employees.get(key)).toString()) + 1);
             } else {
-                firstNames.put(employees.get(key), 1);
+                firstNames.put(String.valueOf(employees.get(key)), 1);
             }
         }
-        System.out.println(firstNames);
+        return firstNames;
+    }
+    private static Map sortNamesByPopularity(Map <String, Integer> firstNames) {
+        Map<String, Integer> result = firstNames.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        return result;
     }
 }
